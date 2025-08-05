@@ -2,7 +2,7 @@ use crate::selector::CompileTestCase;
 use crate::{
     ArtifactCollection, ArtifactId, ArtifactIdNumber, BenchmarkJob, BenchmarkRequest,
     BenchmarkRequestIndex, BenchmarkRequestStatus, BenchmarkSet, CodegenBackend, CollectorConfig,
-    CompileBenchmark, Target,
+    CompileBenchmark, StatusPage, Target,
 };
 use crate::{CollectionId, Index, Profile, QueuedCommit, Scenario, Step};
 use chrono::{DateTime, Utc};
@@ -253,6 +253,9 @@ pub trait Connection: Send + Sync {
         target: &Target,
         benchmark_set: &BenchmarkSet,
     ) -> anyhow::Result<Option<BenchmarkJob>>;
+
+    /// Get all of the collectors configuration
+    async fn get_status_page_data(&self) -> anyhow::Result<StatusPage>;
 }
 
 #[async_trait::async_trait]

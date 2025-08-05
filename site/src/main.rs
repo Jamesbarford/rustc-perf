@@ -39,16 +39,16 @@ async fn main() {
         tokio::task::spawn(async move {
             let res = Arc::new(load::SiteCtxt::from_db_url(&db_url).await.unwrap());
             *ctxt_.write() = Some(res.clone());
-            let commits = res.index.load().commits().len();
-            let artifacts = res.index.load().artifacts().count();
-            if commits + artifacts == 0 {
-                eprintln!("Loading complete but no data identified; exiting.");
-                std::process::exit(1);
-            }
-            eprintln!("Loading complete; found {} artifacts", commits + artifacts);
-            eprintln!(
-                "View the results in a web browser at 'http://localhost:{port}/compare.html'"
-            );
+            let _commits = res.index.load().commits().len();
+            let _artifacts = res.index.load().artifacts().count();
+            //if commits + artifacts == 0 {
+            //    eprintln!("Loading complete but no data identified; exiting.");
+            //    std::process::exit(1);
+            //}
+            //eprintln!("Loading complete; found {} artifacts", commits + artifacts);
+            //eprintln!(
+            //    "View the results in a web browser at 'http://localhost:{port}/compare.html'"
+            //);
             // Spawn off a task to post the results of any commit results that we
             // are now aware of.
             site::github::post_finished(&res).await;
