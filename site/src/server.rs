@@ -643,6 +643,7 @@ async fn handle_fs_path(
         | "/dashboard.html"
         | "/detailed-query.html"
         | "/help.html"
+        | "/new-status.html"
         | "/status.html" => resolve_template(relative_path).await,
         _ => match TEMPLATES.get_static_asset(relative_path, use_compression)? {
             Payload::Compressed(data) => {
