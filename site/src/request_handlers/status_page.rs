@@ -74,6 +74,17 @@ pub async fn handle_status_page(ctxt: Arc<SiteCtxt>) -> status::Response {
     }
 }
 
+pub async fn handle_new_status_page(ctxt: Arc<SiteCtxt>) -> status::Response {
+    let conn = ctxt.conn().await;
+    let partial_status_page = conn.get_status_page_data().await; 
+    let index = conn.load_benchmark_request_index().await.unwrap();
+    let queue: Vec<BenchmarkRequest> = build_queue(&*conn, &index).await.unwrap();
+
+    status::Response {
+
+    }
+}
+
 fn prettify_log(log: &str) -> Option<String> {
     let mut lines = log.lines();
     let first = lines.next()?;

@@ -4,7 +4,7 @@ use crate::{
     ArtifactCollection, ArtifactId, ArtifactIdNumber, Benchmark, BenchmarkJob, BenchmarkJobStatus,
     BenchmarkRequest, BenchmarkRequestIndex, BenchmarkRequestStatus, BenchmarkRequestType,
     BenchmarkSet, CodegenBackend, CollectionId, CollectorConfig, Commit, CommitType,
-    CompileBenchmark, Date, Index, Profile, QueuedCommit, Scenario, StatusPage, Target,
+    CompileBenchmark, Date, Index, ParialStatusPage, Profile, QueuedCommit, Scenario, Target,
     BENCHMARK_JOB_STATUS_FAILURE_STR, BENCHMARK_JOB_STATUS_IN_PROGRESS_STR,
     BENCHMARK_JOB_STATUS_QUEUED_STR, BENCHMARK_JOB_STATUS_SUCCESS_STR,
     BENCHMARK_REQUEST_MASTER_STR, BENCHMARK_REQUEST_RELEASE_STR,
@@ -1830,7 +1830,7 @@ where
         }
     }
 
-    async fn get_status_page_data(&self) -> anyhow::Result<StatusPage> {
+    async fn get_status_page_data(&self) -> anyhow::Result<ParialStatusPage> {
         let completed_limit = 7;
         let benchmark_request_complete_query = format!(
             r#"
@@ -1960,11 +1960,10 @@ where
                 acc
             });
 
-        Ok(StatusPage {
+        Ok(ParialStatusPage {
             collector_configurations,
             completed: completed_benchmark_requests,
             in_progress,
-            pending: vec![],
         })
     }
 }

@@ -389,6 +389,14 @@ pub mod status {
         pub current: Option<CurrentState>,
         pub missing: Vec<(Commit, MissingReason)>,
     }
+
+    #[derive(Serialize, Debug)]
+    pub struct NewResponse {
+        // Ordered from newest to oldest
+        pub finished_runs: Vec<FinishedRun>,
+        pub current: Option<CurrentState>,
+        pub missing: Vec<(Commit, MissingReason)>,
+    }
 }
 
 pub mod self_profile_raw {

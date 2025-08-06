@@ -1179,15 +1179,14 @@ impl CollectorConfig {
     }
 }
 
-/// A database dump for the status page
+/// A partial database dump for the status page, the state of the queue can only
+/// be accessed from the site, hence partial
 #[derive(Debug, PartialEq)]
-pub struct StatusPage {
+pub struct ParialStatusPage {
     /// The configuration for all collectors 
     pub collector_configurations: Vec<CollectorConfig>,
     /// Last 7 completed requests, with associated jobs if they still exist
     pub completed: Vec<BenchmarkRequest>,
     /// In-progress requests along with associated jobs
     pub in_progress: Vec<(BenchmarkRequest, Vec<BenchmarkJob>)>,
-    /// Pending benchmark requests
-    pub pending: Vec<BenchmarkRequest>,
 }
